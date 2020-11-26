@@ -23,6 +23,7 @@ export default class NewTodoForm extends Component {
         e.preventDefault();
         const newTodo = { ...this.state.todo, id: uuid() };
         // TODO: pass parent function 
+        this.props.createTodo(newTodo);
         this.setState({
             todo: { description: '', isFinished: false }
         });
@@ -39,3 +40,5 @@ export default class NewTodoForm extends Component {
         )
     }
 }
+
+export default NewTodoForm;
