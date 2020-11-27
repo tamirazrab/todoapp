@@ -4,7 +4,7 @@ import React, { Component } from "react";
   render() {
     let { description, isFinished, removeTodo} = this.props;
     return (
-     
+    // TODO: Display todo list here each todo as li  
     );
   }
 }
