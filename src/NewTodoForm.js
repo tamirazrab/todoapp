@@ -5,47 +5,37 @@ class NewTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todoItems: [],
-      todos: {
-        description: "Do something",
-      },
+     todoDescription: "" 
     };
   }
 
   handleChange = (e) => {
-    const previousTodoItems = this.state.todoItems;
-    this.setState((prevState) => ({
-      todos: {
+    this.setState({
         [e.target.name]: [e.target.value],
-        isFinished: false,
-      },
-    }));
-    console.log(this.state.todoItems);
+    });
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const newTodo = { ...this.state.todos, id: uuid() };
-    console.log(newTodo);
+    const newTodo = { ...this.state, id: uuid() };
     // TODO: pass parent function
     this.props.createTodo(newTodo);
-    this.setState((prevState) => ({
-      todoItems: [...prevState.todoItems, this.state.todos],
-      todos: { description: "", isFinished: false },
-    }));
+    this.setState({
+      todoDescription: ""
+    }) ;
   };
   render() {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <lable htmlFor="description">Description</lable>
+          <lable htmlFor="Description">Description</lable>
           <input
-            placeholder="description"
-            name="description"
-            id="description"
+            placeholder="Description of todo"
+            name="todoDescription"
+            id="todoDescription"
             onChange={this.handleChange}
             type="text"
-            value={this.state.todos.description}
+            value={this.state.todoDescription}
           />
           <button>Submit</button>
         </form>

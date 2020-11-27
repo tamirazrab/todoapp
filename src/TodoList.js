@@ -6,38 +6,37 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      todo: [],
+      todos: [],
     };
   }
 
   createTodo = (newTodo) => {
     this.setState({
-      todo: [ newTodo],
+      todos: [ ...this.state.todos, newTodo],
     });
-    console.log(this.state.todo);
-    console.log(newTodo)
+    console.log(this.state.todos);
   };
 
   removeTodo = (id) => {
     this.setState({
-      todo: this.state.todo.filter((t) => t.id !== id),
+      todos: this.state.todos.filter((t) => t.id !== id),
     });
   };
   render() {
-      const todos = this.state.todo.map(todo => {
-          <Todo 
-          description={todo.description}
-          isFinished={todo.isFinished}
-          removeTodo={() => this.removeTodo(todo.id)}
+      const todosList = this.state.todos.map(todo => {
+          return <Todo 
+          todoDescription={todo.todoDescription}
+          removeTodo={this.removeTodo}
           />
 
       });
+      console.log(todosList);
     return (<div>
         <h1> Minimal Todo's</h1>
         <p> Get things done.</p>
         {/* // FIXME: might need to change it to inline arrow function */}
         <NewTodoForm createTodo={this.createTodo}/>
-        {todos}
+        <ul>{todosList}</ul>
     </div>);
   }
 }
