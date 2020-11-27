@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import NewTodoForm from './NewTodoForm';
+import Todo from "./Todo";
 
-export default class TodoList extends Component {
+class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,8 +12,10 @@ export default class TodoList extends Component {
 
   createTodo = (newTodo) => {
     this.setState({
-      todo: [...this.state.todo, newTodo],
+      todo: [ newTodo],
     });
+    console.log(this.state.todo);
+    console.log(newTodo)
   };
 
   removeTodo = (id) => {
@@ -33,6 +37,7 @@ export default class TodoList extends Component {
         <p> Get things done.</p>
         {/* // FIXME: might need to change it to inline arrow function */}
         <NewTodoForm createTodo={this.createTodo}/>
+        {todos}
     </div>);
   }
 }

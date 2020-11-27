@@ -1,44 +1,57 @@
-import React, { Component } from 'react'
-import uuid from 'uuid/v4';
+import React, { Component } from "react";
+import { v4 as uuid } from "uuid";
 
-export default class NewTodoForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todo: {
-                description: 'Do something',
-                isFinished: false,
-            }
-        }
-    }
+class NewTodoForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      todoItems: [],
+      todos: {
+        description: "Do something",
+        isFinished: false,
+      },
+    };
+  }
 
-    handleChange = (e) => {
-        this.setState({
-            [`${todo}.${e.target.name}`]: e.target.value
+  handleChange = (e) => {
+    const previousTodoItems = this.state.todoItems;
+    this.setState((prevState) => ({
+      todos: {
+        [e.target.name]: [e.target.value],
+        isFinished: false,
+      },
+    }));
+    console.log(this.state.todoItems);
+  };
 
-        })
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const newTodo = { ...this.state.todo, id: uuid() };
-        // TODO: pass parent function 
-        this.props.createTodo(newTodo);
-        this.setState({
-            todo: { description: '', isFinished: false }
-        });
-    }
-    render() {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input placeholder="description" value={this.state.todo.description} name="description" onClick={this.handleChange}
-                    type="text"/>
-                </form>
-                <button>Submit</button>
-            </div>
-        )
-    }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const newTodo = { ...this.state.todos, id: uuid() };
+    console.log(newTodo);
+    // TODO: pass parent function
+    this.props.createTodo(newTodo);
+    this.setState((prevState) => ({
+      todoItems: [...prevState.todoItems, this.state.todos],
+      todos: { description: "", isFinished: false },
+    }));
+  };
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <lable htmlFor="description">Description</lable>
+          <input
+            placeholder="description"
+            name="description"
+            onChange={this.handleChange}
+            type="text"
+            value={this.state.todos.description}
+          />
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+  }
 }
 
 export default NewTodoForm;
