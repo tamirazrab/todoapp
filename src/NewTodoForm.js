@@ -8,7 +8,6 @@ class NewTodoForm extends Component {
       todoItems: [],
       todos: {
         description: "Do something",
-        isFinished: false,
       },
     };
   }
@@ -43,6 +42,7 @@ class NewTodoForm extends Component {
           <input
             placeholder="description"
             name="description"
+            id="description"
             onChange={this.handleChange}
             type="text"
             value={this.state.todos.description}
