@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./todo.css";
+import "./TodoList.css";
 
 class Todo extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Todo extends Component {
 
   handleToggleCompletion = () => {
     this.props.toggleCompleted(this.props.id);
-  }
+  };
   handleDelete = () => {
     this.props.removeTodo(this.props.id);
   };
@@ -37,8 +37,8 @@ class Todo extends Component {
     let renderTodo;
     if (this.state.isEditing) {
       renderTodo = (
-        <div>
-          <form onSubmit={this.handleUpdate}>
+        <div className="Todo">
+          <form onSubmit={this.handleUpdate} className="Todo-edit-form">
             <input
               type="text"
               value={this.state.task}
@@ -51,11 +51,24 @@ class Todo extends Component {
       );
     } else {
       renderTodo = (
-      <div>
-        <button onClick={this.toggleEditingForm}>Edit</button>
-        <button onClick={this.handleDelete}>Delete</button>
-        <li className={this.props.isFinished && "completed-todo"} onClick={this.handleToggleCompletion} >{this.props.todoDescription}</li>
-      </div>
+        <div className="Todo">
+          <li
+            className={
+              this.props.isFinished ? "Todo-task completed" : "Todo-task"
+            }
+            onClick={this.handleToggleCompletion}
+          >
+            {this.props.todoDescription}
+          </li>
+          <div className="Todo-buttons">
+          <button onClick={this.toggleEditingForm}>
+            <i class="fa fa-pen" />
+          </button>
+          <button onClick={this.handleDelete}>
+            <i class="fa fa-trash" />
+          </button>
+          </div>
+        </div>
       );
     }
     return renderTodo;

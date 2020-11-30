@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import NewTodoForm from './NewTodoForm';
+import NewTodoForm from "./NewTodoForm";
 import Todo from "./Todo";
+import "./Todo.css";
 
 class TodoList extends Component {
   constructor(props) {
@@ -12,34 +13,34 @@ class TodoList extends Component {
 
   createTodo = (newTodo) => {
     this.setState({
-      todos: [ ...this.state.todos, newTodo],
+      todos: [...this.state.todos, newTodo],
     });
     console.log(this.state.todos);
   };
 
   updateTodo = (id, updatedTodoDescription) => {
-    const updatedTodo = this.state.todos.map(todo => {
-      if(todo.id === id ) {
+    const updatedTodo = this.state.todos.map((todo) => {
+      if (todo.id === id) {
         return { ...todo, todoDescription: updatedTodoDescription };
       }
       return todo;
-    }) ;
-    this.setState({
-      todos: updatedTodo
     });
-  }
+    this.setState({
+      todos: updatedTodo,
+    });
+  };
 
   toggleCompleted = (id) => {
-    const updatedTodo = this.state.todos.map(todo => {
-      if(todo.id === id ) {
+    const updatedTodo = this.state.todos.map((todo) => {
+      if (todo.id === id) {
         return { ...todo, isFinished: !todo.isFinished };
       }
       return todo;
-    }) ;
-    this.setState({
-      todos: updatedTodo
     });
-  }
+    this.setState({
+      todos: updatedTodo,
+    });
+  };
 
   removeTodo = (id) => {
     this.setState({
@@ -47,25 +48,31 @@ class TodoList extends Component {
     });
   };
   render() {
-      const todosList = this.state.todos.map(todo => {
-          return <Todo 
+    const todosList = this.state.todos.map((todo) => {
+      return (
+        <Todo
           key={todo.id}
           id={todo.id}
           isFinished={todo.isFinished}
           todoDescription={todo.todoDescription}
-          updateTodo = {this.updateTodo}
+          updateTodo={this.updateTodo}
           removeTodo={this.removeTodo}
-          toggleCompleted = {this.toggleCompleted}
-          />
+          toggleCompleted={this.toggleCompleted}
+        />
+      );
+    });
+    console.log(todosList);
+    return (
+      <div className="TodoList">
+        <h1>
+          {" "}
+          Minimal Todo's <span> Get things done.</span>
+        </h1>
 
-      });
-      console.log(todosList);
-    return (<div>
-        <h1> Minimal Todo's</h1>
-        <p> Get things done.</p>
-        <NewTodoForm createTodo={this.createTodo}/>
         <ul>{todosList}</ul>
-    </div>);
+        <NewTodoForm createTodo={this.createTodo} />
+      </div>
+    );
   }
 }
 
